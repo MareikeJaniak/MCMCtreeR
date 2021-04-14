@@ -27,6 +27,9 @@ MCMCPhyOneNode <- function(minAgeOne, maxAgeOne, phyOne, monoGroupOne, methodOne
 	
 		if(methodOne == "skewT") {
 		nodeEsts <- estimateSkewT(minAge=minAgeOne, maxAge=maxAgeOne, phy=phyOne, shape=shapeOne, scale=scaleOne, df=dfOne, estimateScale=estimateScaleOne, estimateShape=estimateShapeOne,  monoGroups=monoGroupOne, addMode=addModeOne, maxProb=maxProbOne, minProb=minProbOne, estimateMode=estimateModeOne, plot=F)
-	}	
+	}
+    if(methodOne == "lower") {
+    nodeEsts <- estimateLower(minAge=minAgeOne, phy=phyOne, monoGroups=monoGroupOne)
+  }  
 	return(nodeEsts)
 }

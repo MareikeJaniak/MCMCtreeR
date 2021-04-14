@@ -1,0 +1,42 @@
+#' Lower Age for MCMCtree analysis input
+#'
+#' Produce lower age trees for MCMCtree analysis
+#' @param minAge vector of lower age bounds for nodes matching order in monoGroups
+#' @param monoGroups list  with each element containing species that define a node of interest
+#' @param phy fully resolved phylogeny in ape format
+#' @param writeMCMCtree logical whether to write tree in format that is compatible with MCMCTree to file
+#' @param MCMCtreeName MCMCtree.output file name
+#' @return list containing node estimates for each distribution
+#' \itemize{
+#'  \item{"parameters"}{ estimated parameters for each node}
+#'  \item{"apePhy"}{ phylogeny in ape format with node labels showing node distributions}
+#'  \item{"MCMCtree"}{ phylogeny in MCMCtreeR format}
+#'  \item{"nodeLabels"}{ node labels in MCMCtreeR format}
+#' }
+#' @return If writeMCMCtree=TRUE tree in MCMCtree format in file "MCMCtreeName" written to current working directory
+#' @author Mark Puttick
+#' @examples
+#' data(apeData)
+#' attach(apeData)
+#' ## extract taxon descending from calibrated nodes 8, 10, 11, 13
+#' ## these nodes can be visualised using plot.phylo
+#' ## and nodelabels from ape
+#' monophyleticGroups <- tipDes(apeData$apeTree, c(8,10,11,13))
+#' minimumTimes <- c("nodeOne"=15, "nodeTwo"=6,
+#' "nodeThree"=8, "nodeFour"=13) / 10
+#' maximumTimes <- c("nodeOne" = 30, "nodeTwo" = 12,
+#' "nodeThree"=12, "nodeFour" = 20) / 10
+#' estimateLower(minAge=minimumTimes[1],
+#' monoGroups=monophyleticGroups[[1]], phy=apeTree)$MCMCtree
+#' @export
+
+estimateLower <- function(minAge, phy, monoGroups, writeMCMCtree=FALSE, MCMCtreeName="estimateLower.tre") {
+  nodeCon <- paste0("'L[", minAge, "]'")
+  output <- c()
+  output$parameters <- c("lower age" = minAge)
+  output$apePhy <- nodeToPhy(phy, monoGroups, nodeCon, TRUE) 
+  output$MCMCtree <- nodeToPhy(phy, monoGroups, nodeCon, FALSE) 
+  if(writeMCMCtree == TRUE) 	utils::write.table(output$MCMCtree, paste0(MCMCtreeName), quote=FALSE, row.names=FALSE, col.names=FALSE)	
+  output$nodeLabels <- nodeCon
+  return(output)
+}
