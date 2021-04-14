@@ -39,6 +39,7 @@ plotMCMCtree <- function (parameters, method = c("skewT", "skewNormal", "cauchy"
             col = "grey20", lwd = 2, xlim = timeScale, xaxs = "i", 
             yaxs = "i", bty = "l", las = 1, ylab = "density", 
             xlab = "Ma", main = paste(title), cex = 0.8)
+        abline(v = upperTime, col = "red")    
   			} else {
             time <- seq(0, timeScale[2], 0.01)
             density <- dst(time, xi = parameters[1], omega = parameters[2], 
