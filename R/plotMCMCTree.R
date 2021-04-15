@@ -36,7 +36,7 @@ plotMCMCtree <- function (parameters, method = c("skewT", "skewNormal", "cauchy"
         if (plotMCMCtreeData == TRUE) {
         graphics::curve(dst(x=x, xi = parameters[1], omega = parameters[2], 
             alpha = parameters[3], nu = parameters[4]), lty = 1, 
-            col = "grey20", lwd = 2, xlim = timeScale, xaxs = "i", 
+            col = "grey20", lwd = 2, xlim = c(lowerTime, (upperTime+(upperTime/10))), xaxs = "i", 
             yaxs = "i", bty = "l", las = 1, ylab = "density", 
             xlab = "Ma", main = paste(title), cex = 0.8)
         abline(v = upperTime, col = "red")    
@@ -52,9 +52,10 @@ plotMCMCtree <- function (parameters, method = c("skewT", "skewNormal", "cauchy"
         if (plotMCMCtreeData == TRUE) {
         graphics::curve(dsn(x, xi = parameters[1], omega = parameters[2], 
             alpha = parameters[3]), lty = 1, col = "grey20", 
-            xlim = timeScale, lwd = 1, xpd = T, xaxs = "i", yaxs = "i", 
+            xlim = c(lowerTime, (upperTime+(upperTime/10))), lwd = 1, xpd = T, xaxs = "i", yaxs = "i", 
             bty = "l", las = 1, ylab = "density", xlab = "Ma", 
             main = paste(title), cex = 0.8)
+        abline(v = upperTime, col = "red")
   			} else {
             time <- seq(0, timeScale[2], 0.01)
             density <- dsn(time, xi = parameters[1], omega = parameters[2], 
@@ -67,10 +68,11 @@ plotMCMCtree <- function (parameters, method = c("skewT", "skewNormal", "cauchy"
         if (plotMCMCtreeData == TRUE) {
         plot(cauchyMCMCtree(xRange = timeScale, tL = parameters[1], 
             p = parameters[2], c = parameters[3], minProb = parameters[4]), 
-            type = "l", lty = 1, col = "grey20", xlim = timeScale, 
+            type = "l", lty = 1, col = "grey20", xlim = c(lowerTime, (upperTime+(upperTime/10))), 
             lwd = 1, xpd = T, xaxs = "i", yaxs = "i", bty = "l", 
             las = 1, ylab = "density", xlab = "Ma", main = paste(title), 
             cex = 0.8)
+        abline(v = upperTime, col = "red")
   			} else {
         out <- cauchyMCMCtree(xRange = timeScale, tL = parameters[1], 
             p = parameters[2], c = parameters[3], minProb = parameters[4])
@@ -81,10 +83,11 @@ plotMCMCtree <- function (parameters, method = c("skewT", "skewNormal", "cauchy"
         timeScale <- c(lowerTime, upperTime)
         if (plotMCMCtreeData == TRUE) {
         graphics::curve(stats::dgamma(x, shape = parameters[1], rate = parameters[2]), 
-            lty = 1, col = "grey20", xlim = timeScale, lwd = 1, 
+            lty = 1, col = "grey20", xlim = c(lowerTime, (upperTime+(upperTime/10)), lwd = 1, 
             xpd = T, xaxs = "i", yaxs = "i", bty = "l", las = 1, 
             ylab = "density", xlab = "Ma", main = paste(title), 
             cex = 0.8)
+        abline(v = upperTime, col = "red")
         	} else {
             time <- seq(0, timeScale[2], 0.01)
             density <- stats::dgamma(time, shape = parameters[1], rate = parameters[2])
