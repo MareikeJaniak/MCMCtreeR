@@ -83,12 +83,12 @@ plotMCMCtree <- function (parameters, method = c("skewT", "skewNormal", "cauchy"
         timeScale <- c(lowerTime, upperTime)
         if (plotMCMCtreeData == TRUE) {
         graphics::curve(stats::dgamma(x, shape = parameters[1], rate = parameters[2]), 
-            lty = 1, col = "grey20", xlim = c(lowerTime, (upperTime+(upperTime/10)), lwd = 1, 
+            lty = 1, col = "grey20", xlim = c(lowerTime, (upperTime+(upperTime/10))), lwd = 1, 
             xpd = T, xaxs = "i", yaxs = "i", bty = "l", las = 1, 
             ylab = "density", xlab = "Ma", main = paste(title), 
             cex = 0.8)
         abline(v = upperTime, col = "red")
-        	} else {
+		} else {
             time <- seq(0, timeScale[2], 0.01)
             density <- stats::dgamma(time, shape = parameters[1], rate = parameters[2])
             return(cbind(time, density))
